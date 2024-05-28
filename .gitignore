@@ -1,4 +1,8 @@
 
+#self(mithlesh) add files
+servercopy.txt
+testAndDelete
+
 # Logs
 logs
 *.log
@@ -138,5 +142,5 @@ dist
 
 
 
-servercopy.txt
+
 
