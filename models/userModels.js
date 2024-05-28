@@ -5,6 +5,11 @@ const { type } = require("os");
 // const { MongoClient } = require("mongodb");
 
 const userSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        unique: true,
+        default:'', // Default value if no email is provided
+    },
     username: {
         type: String,
         required: true,
@@ -13,11 +18,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    },
-    email: {
-        type: String,
-        unique: true,
-        default:'',
     },
     image: {
         type: String, // You can store the URL or path to the image

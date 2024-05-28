@@ -95,6 +95,53 @@ router.get("/searchBlog", async (req, res) => {
     }
 });
 
+
+// Route to render blog page
+router.get("/blogPage", async (req, res) => {
+    try {
+        const userData = req.cookies.userData; // access the 'userData' cookie
+        if (!userData) {
+            console.log(
+                `user is not logedin redirected from userProfile route`
+            );
+            return res.redirect("/login");
+        } else {
+            const user = JSON.parse(userData); // converting cookie JSON string to normal string
+            const userName = user.username;
+            const blogs = await Blog.find(); // Fetch all blogs from db
+            // blogs.forEach(element => {
+            //     console.log("element:"+element.title);
+            //     console.log("element:"+element.blog);
+
+            // });
+            res.render("blogPage", { blogs, userName }); // pass the blogs to blogPage.ejs to render the data
+        }
+    } catch (error) {
+        console.error("Error retrieving blogs:", error);
+        res.status(500).send(error + "Error retrieving blogs");
+    }
+});
+// Route to render registation/signup form
+router.get("/signup", (req, res) => {
+    res.render("signup");
+});
+// Route to render login form
+router.get("/login", (req, res) => {
+    res.render("login");
+});
+
+//route to logout
+router.get("/logout", function (req, res) {
+    res.clearCookie("userData");
+    res.sendFile(path.join(__dirname, "../public/home.html"));
+    console.log("Logged out");
+});
+
+// route for user profile update
+router.get("/profileForm", async (req, res) => {
+    res.redirect("/updateUser");
+});
+
 // Route to update user
 router.post("/updateUser", async (req, res) => {
     try {
@@ -132,49 +179,8 @@ router.post("/updateUser", async (req, res) => {
     }
 });
 
-// Route to render blog page
-router.get("/blogPage", async (req, res) => {
-    try {
-        const userData = req.cookies.userData; // access the 'userData' cookie
-        if (!userData) {
-            console.log(
-                `user is not logedin redirected from userProfile route`
-            );
-            return res.redirect("/login");
-        } else {
-            const user = JSON.parse(userData); // converting cookie JSON string to normal string
-            const userName = user.username;
-            const blogs = await Blog.find(); // Fetch all blogs from db
-            // blogs.forEach(element => {
-            //     console.log("element:"+element.title);
-            //     console.log("element:"+element.blog);
-                
-            // });
-            res.render("blogPage", {blogs, userName }); // pass the blogs to blogPage.ejs to render the data
-        }
-    } catch (error) {
-        console.error("Error retrieving blogs:", error);
-        res.status(500).send(error + "Error retrieving blogs");
-    }
-});
-// Route to render registation/signup form
-router.get("/signup", (req, res) => {
-    res.render("signup");
-});
-// Route to render login form
-router.get("/login", (req, res) => {
-    res.render("login");
-});
-
-//route to logout
-router.get("/logout", function (req, res) {
-    res.clearCookie("userData");
-    res.sendFile(path.join(__dirname, "../public/home.html"));
-    console.log("Logged out");
-});
-
 // route for user profile
-router.get("/userProfile", (req, res) => {
+router.get("/userProfile",async (req, res) => {
     try {
         // access userName from the cookie
         const userData = req.cookies.userData;
@@ -186,7 +192,8 @@ router.get("/userProfile", (req, res) => {
         } else {
             const user = JSON.parse(userData);
             const userName = user.username;
-            res.render("profileMenu", { userName }); /////
+            const userdb= await User.findOne({username:userName})
+            res.render("profileMenu", { userName, useremail:userdb.email}); 
         }
     } catch (error) {
         res.status(500).send(
@@ -195,42 +202,33 @@ router.get("/userProfile", (req, res) => {
     }
 });
 
-// route for user profile update
-router.get("/profileForm", async (req, res) => {
-    res.redirect("/updateUser");
-});
 
 // Route to handle signup form submission
 router.post("/signupForm", async (req, res) => {
-    const { username, password } = req.body;
+    const {useremail, username, password } = req.body;
     console.log(
-        `userName: ${username} and password: ${password} data from the browser`
+        `userName: ${username}, password: ${password}Email:${useremail} data from the browser`
     );
     try {
-        console.log("158");
-        const user = await User.find({ username: username });
-        console.log("160");
-        if (user.length > 0) {
-            console.log("You allready have an account, Login");
-            res.render("login", {
-                message: "You allready have an account, Login",
-            });
-        } else {
-            const newUser = new User({ username, password });
-            await newUser.save();
-            console.log("Registered successfuly and Login auto");
-            res.render("login", {
-                message: " Registered successfuly and plese Login",
+        const existingUser = await User.findOne({ username: username });
+        if (existingUser) {
+            console.log("User already exists. Prompting login.");
+            return res.render("login", {
+                message: "You already have an account. Please log in.",
             });
         }
+        const newUser = new User({email:useremail, username, password, });
+        await newUser.save();
+        console.log("Registered successfuly and Login auto");
+        res.render("login", {
+            message: " Registered successfuly and plese Login",
+        });
     } catch (error) {
         if (error.code === 11000) {
-            return res.status(400).send("Duplicate field value entered");
+            return res.status(400).send("Duplicate field value entered signupForm"+error);
         }
-        res.status(500).send(
-            error +
-                " Login Error registering user in routes-index.js file,signup route"
-        );
+        console.error('route signupForm route Error during registration:', error);
+        res.status(500).send('Internal Server Error in signupForn route');
     }
 });
 
@@ -261,14 +259,14 @@ router.post("/loginForm", async (req, res) => {
                 console.log("Incorrect password");
             }
         } else {
-            res.render("signup", {
-                message: "User not found. Please sign up.",
-            });
             console.log("User not found. Please sign up");
+            res.render("signup", {
+                message: "User not found. Please sign up."
+            });
         }
     } catch (error) {
         if (error.code === 11000) {
-            return res.status(400).send("Duplicate field value entered"); // duplicate filds in db
+            return res.status(400).send("Duplicate field value entered "); // duplicate filds in db
         }
         const data = { message: `${error}` };
         res.status(500).send(data);
