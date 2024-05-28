@@ -218,35 +218,44 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 40px;
+	transition: height 0.5s;
 }
 
 #searchResults{
 	
 	display: flex;
+	display: none;
 	flex-direction: column;
 	align-items: start;
 	justify-content:start;
 	max-height: 250px;
 	min-height: fit-content;
 	margin-top: 20px;
-	background-color: var(--gray);
-	width: 30vw;
-	padding: 10px;/*  remover it*/
+	border-radius: 20px;
 	overflow: hidden;
-	
+	/* background-color: var(--gray); */
+	width: 30vw;	
 }
+
+#searchResults.toggelSearchResult{
+	height: fit-content;
+}
+
 #searchResults .blog {
 	display: flex;
 	align-items: center;
 	background-color: var(--blue-color);
 	width: 100%;
+	height: fit-content;
 	overflow: hidden;
 	cursor: pointer;
 	font: 16px/1 system-ui, sans-serif;
 }
 
 #searchResults .blog h2{
-	padding: 2%;
+	padding: 2% 6% 2% 6%;
+	overflow: hidden;
 	font: 15px/1 system-ui, sans-serif;
 	white-space: nowrap; /* Prevent line breaks */
     overflow: hidden; /* Hide overflowing content */

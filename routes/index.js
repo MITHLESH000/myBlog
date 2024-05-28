@@ -54,7 +54,7 @@ router.get("/search", async (req, res) => {
     try {
         const blogs = await Blog.find({
             title: { $regex: query, $options: "i" },
-        }); // Case insensitive search
+        }).limit(7).select("title _id") // Case insensitive search
         res.status(200).json(blogs);
     } catch (error) {
         console.error("Error fetching blogs:", error);
