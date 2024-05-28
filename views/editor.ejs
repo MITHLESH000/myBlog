@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Noto+Sans+Mono:wght@100..900&family=Nova+Mono&display=swap"
+        rel="stylesheet">
+    <link href="css/editor.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <header class="nav-header">
+        <!-- navbar section -->
+        <%- include('nav'); %>
+
+    </header>
+    <div class="main-container">
+        <div class="editor-form">
+
+            <form action="/editorForm" target="_blank" method="post">
+                <div class="title-div">
+                    <label for="editorForm-title">Title</label>
+                    <input type="text" id="blog-title" name="title" placeholder="Give title" required>
+                </div>
+                <div class="blog-div">
+                    <label>Blog</label>
+                    <textarea name="content" id="blog-content" placeholder="Write your blog" required></textarea>
+                </div>
+                <div class="submit-div">
+                    <input type="submit" value="Upload Blog">
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script src="/js/nav.js"></script>
+</body>
+
+</html>

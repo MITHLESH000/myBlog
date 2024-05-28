@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- head meta data -->
+    <%- include('head'); %>
+    <link href="css/searchBar.css" rel="stylesheet">
+</head>
+
+<body>
+    <header class="nav-header">
+        <!-- navbar section -->
+        <%- include('nav'); %>
+    </header>
+
+    <div class="main-container">
+        <!-- hero section -->
+        <%- include('hero'); %>
+        <hr />
+        <!-- blog cards section one -->
+        <div class="cards-section">
+
+            <% if (blogs && blogs.length > 0) { %>
+                <% blogs.forEach(blog => { %>
+                    <div class="card-main">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="<%= blog.imageUrl || 'img/andre-benz-unsplash.jpg' %>" alt="card image">
+                            </div>
+                            <div class="card-text">
+                                <h2><%= blog.title %></h2>
+                                <h3>
+                                    <%= (blog.content || 'No content available').toString().substring(0, 100) %>....
+                                </h3>
+                            </div>
+                            <div class="card-button">
+                                <a href="#" class="button">Read Here</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No blogs available</p>
+            <% } %>
+        </div>
+
+        <div class="link-button">
+            <a href="/editor" target="_blank" class="button">Create your blog</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <!-- footer section -->
+        <%- include('footer'); %>
+    </footer>
+
+    <script src="/js/nav.js"></script>
+    <script src="/js/search.js"></script>
+</body>
+
+</html>

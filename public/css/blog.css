@@ -1,0 +1,388 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+}
+:root {
+    --gray: #797979;
+    --blue-color: #74c0fc;
+    --lightblue: lightblue ;
+}
+
+
+body {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    min-width: 50vw;
+}
+
+/* <a> style */
+a,
+input[type="submit"] {
+    text-decoration: none;
+    color: #212121;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: #74c0fc;
+}
+
+/*  nav started */
+
+/* link buttons start*/
+.link-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: fit-content  ;
+    margin: 0 45% 0 40%;
+    padding: 10px;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 10xp #74c0fc; */
+    color: #fff;
+    background-color: var(--gray);
+    transition: color 0.5s ease;
+}
+.link-button a:hover{
+    color: var(--blue-color);
+}
+/* link buttons ends*/
+
+.nav-header {position: relative;
+    z-index: 2;
+    height: 7vh;
+    width: 99vw;
+}
+.header--content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2vw 0 1vw;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 6vh;
+    width: 3vw;
+    padding: 2px;
+}
+.logo-text {
+    padding: 2px;
+    font-size: 20px;
+}
+
+.header--button {
+    height: 40px;
+    width: 40px;
+    padding:2px;
+    margin-right: 5%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.header--button img {
+    background-color: var(--blue-color);
+    height: 40px;
+    width: 100%;
+}
+
+.header--button img:hover{
+    cursor: pointer;
+}
+.sub-menu-wrap{
+    position: absolute;
+    top: 100%;
+    overflow: hidden;
+    max-height:0px;
+    width: 250px;
+    right: 8%;
+    color: #fff;
+    transition: max-height 0.5s;
+}
+.sub-menu-wrap.open-menu{
+    max-height: 300px;
+}
+
+.sub-menu{
+    display: flex;
+    align-items: center ;
+    background:var(--blue-color);
+    border-radius: 10px;
+    overflow: hidden;
+    
+}
+.user-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    height: 30%;
+}
+.user-info img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+
+}
+.user-info h3{
+    font-weight: 500;
+}
+.user-info hr{
+    margin:15px 0 10px;
+    height: 1px;
+    width: 100%;
+    border:0;
+    background-color: #fff;
+}
+.user-info a:hover{
+    color: #fff;
+
+}
+.sub-menu-link{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+
+}
+.sub-menu-link img{
+    width: 40px;
+    height: 30px;
+}
+
+/* nav end  */
+
+/* main container */
+.main-container {
+    /* flex-wrap: wrap; */
+    height: auto;
+    width: 100%;
+    background-color: #74c0fc;
+}
+
+/* hero section  start*/
+/* .hero--section {
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    background-color: #212121;
+} */
+
+.hero-section {
+    
+    display: flex;
+    height: 75vh;
+    padding: 5%;
+    overflow: hidden;
+    background-color: var(--lightblue);
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    flex: 1; /* All items will take up equal space */
+    margin: 10px;
+    padding: 20px;
+}
+.hero-text h1 {
+    font-size: 35px;
+    padding: 5px;
+    color: #74c0fc;
+}
+
+.hero-text h2 {
+    font-size: 20px;
+    padding: 5px;
+    color: #fff;
+}
+
+.hero-icon {
+    margin: 5%;
+}
+
+
+/* hero sectionend */
+
+/* card section start*/
+.cards-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+    background-color: vat(--blue-color);
+}
+
+.card-main {
+    height: 70vh;
+    width: 22vw;
+    min-width: 40vh;
+    margin: 2%;
+    background-color: lightblue;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+.card-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50%;
+    width: 100%;
+}
+.card-image img {
+    height: 100%;
+    width: 100%;
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 40%;
+    width: 100%;
+}
+
+.card-text h2 {
+    font-size: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    padding: 2% 5% 2% 5%;
+    overflow: hidden;
+    color: var(--gray);
+}
+.card-text h3 {
+    font-size: 13px;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: centers;
+    text-align: left;
+    padding: 2% 5% 2% 5%;
+    overflow: hidden;
+    color: var(--gray);
+}
+.card-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 50%;
+    margin: 0 5% 5% 5%;
+    padding: 10px;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 10xp #74c0fc; */
+    color: #fff;
+    background-color: #74c0fc;
+    transition: color 0.5s ease;
+}
+.button:hover {
+    color: #fff;
+}
+/* card section end */
+/* Footer */
+
+/* <ul> <li> list style*/
+
+ul li {
+    list-style: none;
+}
+
+ul li h3 {
+    font-size: 22px;
+    color: #ffff;
+    padding-bottom: 10px;
+}
+
+.footer {
+    height: 50vh;
+    width: 100%;
+    padding-top: 25px;
+    color: #797979;
+    background-color: #2b2929;
+}
+
+.footer-link {
+    color: #797979;
+}
+
+.footer-section {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 8vh;
+    padding-right: 10vw;
+    height: 30vh;
+}
+
+.hr-tag {
+    padding-left: 10vw;
+}
+
+.hr-tag hr {
+    width: 80%;
+    border: none;
+    height: 1px;
+    background-color: #74c0fc;
+}
+
+.footer-meta {
+    display: flex;
+    justify-content: left;
+
+    padding-left: 10vw;
+    padding-top: 5vh;
+}
+.footer-meta ul {
+    display: flex;
+    align-items: center;
+}
+.footer-meta ul li a {
+    padding: 5px;
+}
+.footer-meta ul hr {
+    height: 10px;
+    width: 1 px;
+    border: none;
+    margin: 0 5px 0 5px;
+    background-color: #74c0fc;
+}
+
+/* extra */
+/* .wing{
+    height: 90vh;
+    width: 100%;
+}
+.wing img{
+    position: absolute;
+    z-index: 3;
+    height: 800px;
+    width: 800px;
+    overflow: hidden;
+} */

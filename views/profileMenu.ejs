@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include('head'); %>
+   <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+        <%- include('nav');%>
+    <div class="profile-container">
+        <div class="profile">
+
+            <form id="profileForm" action="/updateUser" method="post">
+                <label for="profileName">Name</label>
+                <input id="profileName" type="text" placeholder="<%= userName || 'Name'%>" name="userName" required>
+                <label for="profileEmail">Emale</label>
+                <input id="profileEmail" email="text" placeholder="Enter your Email" name="userEmail" required>
+                <label for="profileImage">Image</label>
+                <input id="profileImage" file="text" placeholder="Image" name="image" >
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

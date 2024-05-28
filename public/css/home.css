@@ -1,0 +1,202 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: monospace;
+}
+
+body {
+    position: relative;
+}
+/* <a> style */
+a {
+    text-decoration: none;
+    color: #ffff;
+    transition: color 0.3s ease;
+}
+a:hover {
+    color: #74c0fc;
+}
+
+.nav-header {
+    z-index: 2;
+    height: 7vh;
+    width: 99vw;
+    background-image: url(/img/retrosupply.jpg);
+    background-size: cover;
+    background-position: top;
+}
+.header--content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2vw 0 1vw;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 6vh;
+    width: 3vw;
+    padding: 2px;
+}
+.logo-text {
+    padding: 2px;
+    font-size: 20px;
+}
+.header--button {
+    font-size: 15px;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+/* Main section */
+.main-content{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.section {
+    height: 95vh;
+    width: 99vw;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* color: #ffff; */
+}
+
+.image {
+    padding-top: 32vh;
+    height: 100%;
+    width: 100%;
+    background-position: top;
+    background-size: cover;
+}
+
+.section-header {
+    position: absolute;
+    width: 35vw;
+    z-index: 2;
+    color: #7e7e7e;
+}
+.section-header h2 {
+    font-size: 28px;
+    color: #ffff;
+}
+.section-header p {
+    font-size: 15px;
+}
+.background {
+    flex-wrap: wrap;
+    position: absolute;
+    z-index: 0;
+    overflow: hidden;
+}
+.background image{
+    
+}
+
+.section-header a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-blog-button {
+    height: 40px;
+    width: 150px;
+    border-radius: 10px;
+    background-color: #74c0fc;
+    font-size: 15px;
+}
+.create-blog-button:hover {
+    color: #212121;
+}
+
+.scrolldown {
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    right: 0;
+    padding: 0 20px 50px 0;
+}
+
+.section-header div {
+    position: absolute;
+    z-index: 2;
+}
+
+/* Footer */
+
+/* <ul> <li> list style*/
+
+ul li {
+    list-style: none;
+}
+
+ul li h3 {
+    font-size: 22px;
+    color: #ffff;
+    padding-bottom: 10px;
+}
+
+.footer {
+    height: 50vh;
+    width: 99vw;
+    color: #797979;
+    background-color: #2b2929;
+}
+
+.footer-link {
+    color: #797979;
+}
+
+.footer-section {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 8vh;
+    padding-right: 10vw;
+    height: 30vh;
+}
+
+.hr-tag {
+    padding-left: 10vw;
+}
+
+.hr-tag hr {
+    width: 80%;
+    border: none;
+    height: 1px;
+    background-color: #74c0fc;
+}
+
+.footer-meta {
+    display: flex;
+    justify-content: left;
+
+    padding-left: 10vw;
+    padding-top: 5vh;
+}
+.footer-meta ul {
+    display: flex;
+    align-items: center;
+}
+.footer-meta ul li a {
+    padding: 5px;
+}
+.footer-meta ul hr {
+    height: 10px;
+    width: 1 px;
+    border: none;
+    margin: 0 5px 0 5px;
+    background-color: #74c0fc;
+}

@@ -1,0 +1,307 @@
+const express = require("express");
+const path = require("path");
+const router = express.Router();
+const cookieParser = require("cookie-parser");
+const bcrypt = require("bcryptjs");
+const User = require("../models/userModels");
+const mongoose = require("mongoose");
+const Blog = require("../models/blogModels");
+
+//access cookie userData function
+// const userName = (data)=>{
+//     try {
+
+//         const userData = data;
+//            if(!userData){
+//                console.log(`user is not logedin redirected from userProfile route`)
+//                return
+//             }else{
+//                 const user=JSON.parse(userData);
+//                 const userName = user.username;
+//                 console.log(userName);
+//                 return userName;
+//             }
+//     } catch (error) {
+//         console.log(error+"userName function error");
+//     }
+// }
+
+// Middleware to parse cookies
+router.use(cookieParser());
+// Middleware to parse URL-encoded data (form data)
+router.use(express.urlencoded({ extended: true }));
+// Middleware to parse JSON data
+router.use(express.json());
+
+router.use(express.static(path.join(__dirname, "../public")));
+
+// Route to render editor form
+router.get("/editor", (req, res) => {
+    const userData = req.cookies.userData; // access the 'userData' cookie
+    if (!userData) {
+        console.log(`user is not logedin redirected from userProfile route`);
+        return res.redirect("/login");
+    } else {
+        const user = JSON.parse(userData); // converting cookie JSON string to normal string
+        const userName = user.username;
+        res.render("editor", { userName });
+    }
+});
+
+// Route to search title
+router.get("/search", async (req, res) => {
+    const query = req.query.title;
+    try {
+        const blogs = await Blog.find({
+            title: { $regex: query, $options: "i" },
+        }); // Case insensitive search
+        res.status(200).json(blogs);
+    } catch (error) {
+        console.error("Error fetching blogs:", error);
+        res.status(500).send("Error fetching blogs");
+    }
+});
+//Rout searchBlog to render blog page
+router.get("/searchBlog", async (req, res) => {
+    try {
+        const blogId = req.query.id;
+        console.log(`blogid:${blogId}`);
+        const userData = req.cookies.userData; // Access the 'userData' cookie
+
+        if (!userData) {
+            console.log(
+                "User is not logged in, redirected from userProfile route"
+            );
+            return res.redirect("/login");
+        } else {
+            const user = JSON.parse(userData); // Convert cookie JSON string to an object
+            const userName = user.username;
+
+            // Validate if blogId is a valid MongoDB ObjectId
+            if (!mongoose.Types.ObjectId.isValid(blogId)) {
+                return res.status(400).send("Invalid blog ID");
+            }
+
+            const blog = await Blog.findById(blogId); // Fetch the blog by ID
+
+            if (!blog) {
+                return res.status(404).send("Blog not found");
+            }
+            res.render("blog", { blog, userName }); // Pass the blog to blogPage.ejs to render the data
+        }
+    } catch (error) {
+        console.error("Error in searchBlog route retrieving blog:", error);
+        res.status(500).send("Error retrieving blog");
+    }
+});
+
+// Route to update user
+router.post("/updateUser", async (req, res) => {
+    try {
+        const userdata = req.cookies.userData; // access the 'userData' cookie
+        const { userName, userEmail } = req.body;
+        if (!userdata) {
+            console.log(
+                `user is not logedin redirected from userProfile route`
+            );
+            return res.redirect("/login");
+        } else {
+            const userData = JSON.parse(userdata); // converting cookie JSON string to normal string
+            const username = userData.username;
+            const user = await User.findOne({ username }); // Fetch user data from db
+            if (!user) {
+                return res.status(404).send("User not found");
+            }
+            const updatedUser = await User.findByIdAndUpdate(
+                user._id,
+                { username: userName, email: userEmail },
+                { new: true, runValidators: true }
+            ); //
+            if (!updatedUser) {
+                return res.status(404).send("User not found");
+            }
+
+            res.status(200).json(updatedUser);
+        }
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).send("Duplicate field value entered");
+        }
+        console.error("Error updateUser :", error);
+        res.status(500).send(error + " Error in updateUser");
+    }
+});
+
+// Route to render blog page
+router.get("/blogPage", async (req, res) => {
+    try {
+        const userData = req.cookies.userData; // access the 'userData' cookie
+        if (!userData) {
+            console.log(
+                `user is not logedin redirected from userProfile route`
+            );
+            return res.redirect("/login");
+        } else {
+            const user = JSON.parse(userData); // converting cookie JSON string to normal string
+            const userName = user.username;
+            const blogs = await Blog.find(); // Fetch all blogs from db
+            // blogs.forEach(element => {
+            //     console.log("element:"+element.title);
+            //     console.log("element:"+element.blog);
+                
+            // });
+            res.render("blogPage", {blogs, userName }); // pass the blogs to blogPage.ejs to render the data
+        }
+    } catch (error) {
+        console.error("Error retrieving blogs:", error);
+        res.status(500).send(error + "Error retrieving blogs");
+    }
+});
+// Route to render registation/signup form
+router.get("/signup", (req, res) => {
+    res.render("signup");
+});
+// Route to render login form
+router.get("/login", (req, res) => {
+    res.render("login");
+});
+
+//route to logout
+router.get("/logout", function (req, res) {
+    res.clearCookie("userData");
+    res.sendFile(path.join(__dirname, "../public/home.html"));
+    console.log("Logged out");
+});
+
+// route for user profile
+router.get("/userProfile", (req, res) => {
+    try {
+        // access userName from the cookie
+        const userData = req.cookies.userData;
+        if (!userData) {
+            console.log(
+                `user is not logedin redirected from userProfile route`
+            );
+            return res.redirect("/login");
+        } else {
+            const user = JSON.parse(userData);
+            const userName = user.username;
+            res.render("profileMenu", { userName }); /////
+        }
+    } catch (error) {
+        res.status(500).send(
+            "accessing userName form cookie Error in routes-index.js file, userProfile route"
+        );
+    }
+});
+
+// route for user profile update
+router.get("/profileForm", async (req, res) => {
+    res.redirect("/updateUser");
+});
+
+// Route to handle signup form submission
+router.post("/signupForm", async (req, res) => {
+    const { username, password } = req.body;
+    console.log(
+        `userName: ${username} and password: ${password} data from the browser`
+    );
+    try {
+        console.log("158");
+        const user = await User.find({ username: username });
+        console.log("160");
+        if (user.length > 0) {
+            console.log("You allready have an account, Login");
+            res.render("login", {
+                message: "You allready have an account, Login",
+            });
+        } else {
+            const newUser = new User({ username, password });
+            await newUser.save();
+            console.log("Registered successfuly and Login auto");
+            res.render("login", {
+                message: " Registered successfuly and plese Login",
+            });
+        }
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).send("Duplicate field value entered");
+        }
+        res.status(500).send(
+            error +
+                " Login Error registering user in routes-index.js file,signup route"
+        );
+    }
+});
+
+//Route to handle Login form submission
+router.post("/loginForm", async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (user) {
+            const isMatch = await bcrypt.compare(password, user.password);
+
+            if (isMatch) {
+                // const username= user.username;
+                // Serialize user data into a JSON string
+                const userData = JSON.stringify({ username: user.username });
+                // Set a cookie named 'username' with the value from the form
+                res.cookie("userData", userData, {
+                    maxAge: 900000,
+                    httpOnly: true,
+                });
+                console.log(`cookie created`);
+
+                res.redirect("/blogPage"); // redirect the route to /blogePage
+            } else {
+                res.render("login", { message: "Incorrect password" });
+                console.log("Incorrect password");
+            }
+        } else {
+            res.render("signup", {
+                message: "User not found. Please sign up.",
+            });
+            console.log("User not found. Please sign up");
+        }
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).send("Duplicate field value entered"); // duplicate filds in db
+        }
+        const data = { message: `${error}` };
+        res.status(500).send(data);
+    }
+});
+
+// route to save blog in DB
+router.post("/editorForm", async (req, res) => {
+    try {
+        const { title, content } = req.body;
+        const userData = req.cookies.userData;
+        if (!userData) {
+            return res.status(401).send("User not authenticated please Login");
+        } else {
+            const user = JSON.parse(userData);
+            console.log(user.username);
+            const author = user.username;
+            const newBlog = new Blog({ title, content, author });
+            await newBlog.save();
+            res.status(201).send(`${title} blog is saved`);
+        }
+    } catch (error) {
+        res.status(500).send(
+            error + " Blog Error routes-index.js file, editorForm route"
+        );
+    }
+});
+
+// access cookie data userData=JSON.parse(req.cookie.userData); const {usrname, password} = userData;
+
+// Route to render login form
+router.get("/login", (req, res) => {
+    res.render("login");
+});
+
+module.exports = router;
