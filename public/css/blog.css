@@ -6,9 +6,8 @@
 :root {
     --gray: #797979;
     --blue-color: #74c0fc;
-    --lightblue: lightblue ;
+    --lightblue: lightblue;
 }
-
 
 body {
     position: relative;
@@ -32,12 +31,12 @@ a:hover {
 /*  nav started */
 
 /* link buttons start*/
-.link-button{
+.link-button {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 40px;
-    width: fit-content  ;
+    width: fit-content;
     margin: 0 45% 0 40%;
     padding: 10px;
     border-radius: 8px;
@@ -46,12 +45,13 @@ a:hover {
     background-color: var(--gray);
     transition: color 0.5s ease;
 }
-.link-button a:hover{
+.link-button a:hover {
     color: var(--blue-color);
 }
 /* link buttons ends*/
 
-.nav-header {position: relative;
+.nav-header {
+    position: relative;
     z-index: 2;
     height: 7vh;
     width: 99vw;
@@ -81,7 +81,7 @@ a:hover {
 .header--button {
     height: 40px;
     width: 40px;
-    padding:2px;
+    padding: 2px;
     margin-right: 5%;
     border-radius: 50%;
     overflow: hidden;
@@ -93,34 +93,31 @@ a:hover {
     width: 100%;
 }
 
-.header--button img:hover{
+.header--button img:hover {
     cursor: pointer;
 }
-.sub-menu-wrap{
+.sub-menu-wrap {
     position: absolute;
     top: 100%;
     overflow: hidden;
-    max-height:0px;
+    max-height: 0px;
     width: 250px;
     right: 8%;
     color: #fff;
     transition: max-height 0.5s;
-
 }
-.sub-menu-wrap.open-menu{
+.sub-menu-wrap.open-menu {
     max-height: 300px;
-    
 }
 
-.sub-menu{
+.sub-menu {
     display: flex;
-    align-items: center ;
-    background:var(--blue-color);
+    align-items: center;
+    background: var(--blue-color);
     border-radius: 10px;
     overflow: hidden;
-    
 }
-.user-info{
+.user-info {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,36 +126,32 @@ a:hover {
     width: 100%;
     height: 30%;
 }
-.user-info img{
+.user-info img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-
 }
-.user-info h3{
+.user-info h3 {
     font-weight: 500;
 }
-.user-info hr{
-    margin:15px 0 10px;
+.user-info hr {
+    margin: 15px 0 10px;
     height: 1px;
     width: 100%;
-    border:0;
+    border: 0;
     background-color: #fff;
 }
-.user-info a:hover{
+.user-info a:hover {
     color: #fff;
-
 }
-.sub-menu-link{
+.sub-menu-link {
     width: 100%;
     padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
-
 }
-.sub-menu-link img{
+.sub-menu-link img {
     width: 40px;
     height: 30px;
 }
@@ -182,7 +175,6 @@ a:hover {
 } */
 
 .hero-section {
-    
     display: flex;
     height: 75vh;
     padding: 5%;
@@ -215,7 +207,6 @@ a:hover {
 .hero-icon {
     margin: 5%;
 }
-
 
 /* hero section end */
 
