@@ -237,3 +237,9 @@
 #searchResults .blog h2{
 	font: 15px/1 system-ui, sans-serif;
 }
+#searchResults:not-focus{
+	display: none;
+}
+#search input:not(:focus-within) #searchResults {
+	display: none;
+  }
