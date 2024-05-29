@@ -252,7 +252,7 @@ router.post("/loginForm", async (req, res) => {
                     httpOnly: true,
                 });
                 console.log(`cookie created`);
-
+                
                 res.redirect("/blogPage"); // redirect the route to /blogePage
             } else {
                 res.render("login", { message: "Incorrect password" });
