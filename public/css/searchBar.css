@@ -270,3 +270,28 @@
 /* #search input:not(:focus-within) #searchResults {
 	display: none;
   } */
+
+  /* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    #search input {
+        width: calc(100% - 60px);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #search input {
+        width: calc(100% - 50px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #searchResults .blog h2 {
+        font-size: 14px; /* Adjust font size for smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #searchResults .blog h2 {
+        font-size: 13px; /* Further adjust font size for even smaller screens */
+    }
+}

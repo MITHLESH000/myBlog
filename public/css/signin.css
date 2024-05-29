@@ -154,3 +154,26 @@ input[type="submit"]:hover {
 h2 {
     text-align: center;
 }
+
+
+/* Media Queries for Responsive Design */
+
+@media only screen and (max-width: 768px) {
+    .form {
+        width: 80vw;
+    }
+    
+    .button--rel {
+        width: 60vw;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .form {
+        width: 90vw;
+    }
+    
+    .button--rel {
+        width: 80vw;
+    }
+}

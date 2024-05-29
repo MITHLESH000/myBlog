@@ -379,3 +379,39 @@ ul li h3 {
     width: 800px;
     overflow: hidden;
 } */
+
+
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .link-button {
+        margin: 0 auto; /* Center the button horizontally */
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .hero-section { 
+        flex-direction: column; /* Change to column layout for smaller screens */
+        align-items: center; /* Center items vertically */
+    }
+    
+    .card-main {
+        min-width: 90%; /* Adjusted minimum width for cards */
+    }
+    
+    .card-button {
+        width: 80%; /* Adjusted width for card buttons */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .footer-section {
+        flex-direction: column; /* Change to column layout for smaller screens */
+        align-items: center; /* Center items horizontally */
+    }
+    
+    .footer-meta {
+        padding-left: 0; /* Remove left padding */
+        padding-top: 2vh; /* Adjust top padding */
+    }
+}
