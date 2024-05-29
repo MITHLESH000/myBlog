@@ -1,0 +1,54 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: monospace, Arial, Helvetica, sans-serif;
+}
+:root {
+    --gray: #797979;
+    --blue-color: #74c0fc;
+    --lightblue: lightblue;
+}
+/* blogHero.ejs start*/
+.hero-text{ 
+    position: relative; /* Ensure that the hero-section is the positioning context for its children */
+    padding: 20px; /* Adjust as necessary */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items to the start (left) by default */
+}
+.blog-title{
+
+}
+
+.hero {
+
+}
+
+.blog-author{
+position: relative;
+color: var(--gray);
+font-size: 25px;
+display: flex;
+align-self: center;
+margin-top: 10%;
+
+
+}
+
+.blog-date {
+    position: absolute;
+    right: 20px; /* Adjust the right position as necessary */
+    bottom: 20px; /* Adjust the bottom position as necessary */
+    margin: 0;
+    color: var(--gray);
+    /* Add any additional styles */
+}
+/* blogHero.ejs ends*/
+.blog-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.blog-section .blog{
+    padding: 10%;
+}

@@ -5,14 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog</title>
     <link href="css/blog.css" rel="stylesheet">
+    <link href="css/readBlog.css" rel="stylesheet">
 </head>
 <body>
-    <header class="nav-header">
-       <%- include('nav'); %>
-        
-    </header>
-    <%- include('blogHero'); %>
-    <P><h3><%= blog.content %> </h3></P>
+    <header class="nav-header ">
+        <%- include('nav'); %>
+         
+     </header>
+    <div class="main-container">
+        <!-- hero section -->
+        <div class="blog-hero-header">
+            <%- include('blogHero'); %>
 
+        </div>
+        
+        <!-- blog section one -->
+        <div class="blog-section">
+            <div class="blog">
+
+                <%= blog.content %> 
+            </div>
+        </div>
+
+        <div class="link-button">
+            <a href="/editor" target="_blank" class="button">Create your blog</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <!-- footer section -->
+        <%- include('footer'); %>
+    </footer>
+    
+    
+    <script src="/js/blogPage.js"></script>
 </body>
 </html>

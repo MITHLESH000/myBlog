@@ -12,6 +12,7 @@
                             <%= (blog.content || 'No content available').substring(0, 200) %>...
                         </h2>
                         <h2>Author: <%= blog.author %></h2>
+                        <h2>Blog creation time: <%= new Date(blog.date).toLocaleDateString() %> Time: <%= new Date(blog.date).toLocaleTimeString() %><h2></h2>
                     <% }); %>
                 <% } else { %>
                     <p>No blogs available</p>

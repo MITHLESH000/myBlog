@@ -1,16 +1,17 @@
 <!-- <div class="hero--section"> -->
-    <hero class="hero-section">
+    <hero class="hero-section hero">
         <div class="hero-text">
             
-            <h1>
+            <h1 class="blog-title">
                 <%= blog.title %>
             </h1>
-            <h2>
-               By <%= blog.author %>
-            </h2>
-            <h2>Blog creation time: <%= new Date(blog.date).toLocaleDateString() %> Time: <%= new Date(blog.date).toLocaleTimeString() %><h2>
+            <h3 class="blog-author">
+               By: <%= blog.author %>
+            </h3>
+            <h3 class="blog-date">Blog creation time: <%= new Date(blog.date).toLocaleDateString() %> Time: <%= new Date(blog.date).toLocaleTimeString() %><h2>
         </div>
-        <div class="hero-icon">   
+        <div class="hero-icon"> 
+              <!-- add user has an image -->
         </div>
         <!-- <div class="blogbook-image">
             <img src="/img/blogbook.jpeg" alt="blogbook image">
