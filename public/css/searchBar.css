@@ -218,7 +218,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 	transition: height 0.5s;
 }
 
@@ -226,12 +226,12 @@
 	
 	display: flex;
 	display: none;
-	flex-direction: column;
+	/* flex-direction: column;
 	align-items: start;
-	justify-content:start;
+	justify-content:start; */
 	max-height: 250px;
 	min-height: fit-content;
-	margin-top: 20px;
+	margin-top: 10px;
 	border-radius: 20px;
 	overflow: hidden;
 	/* background-color: var(--gray); */
@@ -240,6 +240,7 @@
 
 #searchResults.toggelSearchResult{
 	height: fit-content;
+	
 }
 
 #searchResults .blog {
