@@ -4,9 +4,13 @@
     font-family: monospace, Arial, Helvetica, sans-serif;
 }
 :root {
-    --gray: #797979;
-    --blue-color: #74c0fc;
+    --gray: #2b2929;
+    --link-color: #797979;
+    --blue: #74c0fc;
+    --white:#ffff;
     --lightblue: lightblue;
+}
+:root {
 }
 
 body {
@@ -25,7 +29,7 @@ input[type="submit"] {
     transition: color 0.3s ease;
 }
 a:hover {
-    color: #74c0fc;
+    color: var(--blue);
 }
 
 /*  nav started */
@@ -42,7 +46,7 @@ a:hover {
     border-radius: 8px;
     /* box-shadow: 0 2px 10xp #74c0fc; */
     color: #fff;
-    background-color: var(--gray);
+    background-color: var(--link-color);
     transition: color 0.5s ease;
 }
 .link-button a:hover {
@@ -88,7 +92,7 @@ a:hover {
 }
 
 .header--button img {
-    background-color: var(--blue-color);
+    background-color: var(--blue);
     height: 40px;
     width: 100%;
 }
@@ -113,7 +117,7 @@ a:hover {
 .sub-menu {
     display: flex;
     align-items: center;
-    background: var(--blue-color);
+    background: var(--blue);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -163,7 +167,7 @@ a:hover {
     /* flex-wrap: wrap; */
     height: auto;
     width: 100%;
-    background-color: #74c0fc;
+    background-color: var(--blue);
 }
 
 /* hero section  start*/
@@ -195,7 +199,7 @@ a:hover {
 .hero-text h1 {
     font-size: 35px;
     padding: 5px;
-    color: #74c0fc;
+    color: var(--blue);
 }
 
 .hero-text h2 {
@@ -217,7 +221,7 @@ a:hover {
     justify-content: center;
     height: auto;
     width: 100%;
-    background-color: vat(--blue-color);
+    background-color: var(--blue);
 }
 
 .card-main {
@@ -268,7 +272,7 @@ a:hover {
     text-align: left;
     padding: 2% 5% 2% 5%;
     overflow: hidden;
-    color: var(--gray);
+    color: var(--link-color);
 }
 .card-text h3 {
     font-size: 13px;
@@ -280,7 +284,7 @@ a:hover {
     text-align: left;
     padding: 2% 5% 2% 5%;
     overflow: hidden;
-    color: var(--gray);
+    color: var(--link-color);
 }
 .card-button {
     display: flex;
@@ -293,78 +297,107 @@ a:hover {
     border-radius: 8px;
     /* box-shadow: 0 2px 10xp #74c0fc; */
     color: #fff;
-    background-color: #74c0fc;
+    background-color: var(--blue);
     transition: color 0.5s ease;
 }
 .button:hover {
     color: #fff;
 }
 /* card section end */
+
+
 /* Footer */
 
 /* <ul> <li> list style*/
 
-ul li {
+.footer-section ul li {
     list-style: none;
 }
 
-ul li h3 {
+.footer-section ul li h3 {
     font-size: 22px;
     color: #ffff;
     padding-bottom: 10px;
 }
 
 .footer {
-    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #fff;
+    /* height: auto;
     width: 100%;
-    padding-top: 25px;
     color: #797979;
-    background-color: #2b2929;
+     */
 }
-
+.footer-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: fit-content;
+    background-color: #2b2929;
+    width: 100%;
+    padding: 20px 0 20px 0;
+}
 .footer-link {
-    color: #797979;
+    color: var(--link-color);
 }
 
 .footer-section {
     display: flex;
-    justify-content: space-around;
-    padding-top: 8vh;
-    padding-right: 10vw;
-    height: 30vh;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    padding: 3%;
 }
-
-.hr-tag {
-    padding-left: 10vw;
+.hr-tag{
+    width:80%;
 }
 
 .hr-tag hr {
-    width: 80%;
-    border: none;
     height: 1px;
-    background-color: #74c0fc;
+    width: 100%;
+    border: none;
+    margin: 5px 0px 5px 0px;
+    background-color: var(--blue);
 }
 
 .footer-meta {
     display: flex;
-    justify-content: left;
-    padding-left: 10vw;
-    padding-top: 5vh;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    padding: 3%;
 }
 .footer-meta ul {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    list-style: none;
 }
 .footer-meta ul li a {
     padding: 5px;
 }
 .footer-meta ul hr {
-    height: 10px;
-    width: 1 px;
+    height: 11px;
+    width: 1px;
     border: none;
     margin: 0 5px 0 5px;
-    background-color: #74c0fc;
+    background-color: var(--blue);
 }
+.footer-author {
+    display: flex;
+   justify-content: center;
+    height: auto;
+    width: 100%;
+    color: #ffff;
+}
+
+/* footer ends */
 
 /* extra */
 /* .wing{
