@@ -19,7 +19,7 @@ const port = process.env.PORT || 3000;
 // const filePath=path;
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views'));
+app.set('views', path.join(__dirname, 'views'));
 
 
 // Set up other middleware and routes...
