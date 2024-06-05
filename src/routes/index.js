@@ -33,7 +33,7 @@ router.use(express.urlencoded({ extended: true }));
 // Middleware to parse JSON data
 router.use(express.json());
 
-router.use(express.static(path.join(__dirname, "../public")));
+router.use(express.static(path.join(__dirname, "../../public")));
 
 // Route to render editor form
 router.get("/editor", (req, res) => {
