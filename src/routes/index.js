@@ -7,24 +7,11 @@ const User = require("../models/userModels");
 const mongoose = require("mongoose");
 const Blog = require("../models/blogModels");
 
-//access cookie userData function
-// const userName = (data)=>{
-//     try {
+const upload = require('../middlewares/multerConfig');
+const fileController = require('../controllers/fileController');
 
-//         const userData = data;
-//            if(!userData){
-//                console.log(`user is not logedin redirected from userProfile route`)
-//                return
-//             }else{
-//                 const user=JSON.parse(userData);
-//                 const userName = user.username;
-//                 console.log(userName);
-//                 return userName;
-//             }
-//     } catch (error) {
-//         console.log(error+"userName function error");
-//     }
-// }
+
+
 
 // Middleware to parse cookies
 router.use(cookieParser());
@@ -35,16 +22,19 @@ router.use(express.json());
 
 router.use(express.static(path.join(__dirname, "../../public")));
 
+
 // Route to render editor form
-router.get("/editor", (req, res) => {
+router.get("/editor", async (req, res) => {
     const userData = req.cookies.userData; // access the 'userData' cookie
     if (!userData) {
         console.log(`user is not logedin redirected from userProfile route`);
         return res.redirect("/login");
     } else {
         const user = JSON.parse(userData); // converting cookie JSON string to normal string
+        const  userdb = await User.findOne(user);
+        const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
         const userName = user.username;
-        res.render("editor", { userName });
+        res.render("editor", { userName, imageUrl });
     }
 });
 
@@ -76,7 +66,9 @@ router.get("/searchBlog", async (req, res) => {
         } else {
             const user = JSON.parse(userData); // Convert cookie JSON string to an object
             const userName = user.username;
-
+            const  userdb = await User.findOne(user);
+            const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
+            
             // Validate if blogId is a valid MongoDB ObjectId
             if (!mongoose.Types.ObjectId.isValid(blogId)) {
                 return res.status(400).send("Invalid blog ID");
@@ -87,7 +79,8 @@ router.get("/searchBlog", async (req, res) => {
             if (!blog) {
                 return res.status(404).send("Blog not found");
             }
-            res.render("blog", { blog, userName }); // Pass the blog to blogPage.ejs to render the data
+            
+            res.render("blog", { blog, userName, imageUrl }); // Pass the blog to blogPage.ejs to render the data
         }
     } catch (error) {
         console.error("Error in searchBlog route retrieving blog:", error);
@@ -108,13 +101,11 @@ router.get("/blogPage", async (req, res) => {
         } else {
             const user = JSON.parse(userData); // converting cookie JSON string to normal string
             const userName = user.username;
+            const  userdb = await User.findOne(user);
+            const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
             const blogs = await Blog.find(); // Fetch all blogs from db
-            // blogs.forEach(element => {
-            //     console.log("element:"+element.title);
-            //     console.log("element:"+element.blog);
-
-            // });
-            res.render("blogPage", { blogs, userName }); // pass the blogs to blogPage.ejs to render the data
+            
+            res.render("blogPage", { blogs, userName ,imageUrl}); // pass the blogs to blogPage.ejs to render the data
         }
     } catch (error) {
         console.error("Error retrieving blogs:", error);
@@ -133,7 +124,7 @@ router.get("/login", (req, res) => {
 //route to logout
 router.get("/logout", function (req, res) {
     res.clearCookie("userData");
-    res.sendFile(path.join(__dirname, "../public/home.html"));
+    res.sendFile(path.join(__dirname, "../../public/home.html"));
     console.log("Logged out");
 });
 
@@ -142,42 +133,45 @@ router.get("/profileForm", async (req, res) => {
     res.redirect("/updateUser");
 });
 
-// Route to update user
-router.post("/updateUser", async (req, res) => {
-    try {
-        const userdata = req.cookies.userData; // access the 'userData' cookie
-        const { userName, userEmail } = req.body;
-        if (!userdata) {
-            console.log(
-                `user is not logedin redirected from userProfile route`
-            );
-            return res.redirect("/login");
-        } else {
-            const userData = JSON.parse(userdata); // converting cookie JSON string to normal string
-            const username = userData.username;
-            const user = await User.findOne({ username }); // Fetch user data from db
-            if (!user) {
-                return res.status(404).send("User not found");
-            }
-            const updatedUser = await User.findByIdAndUpdate(
-                user._id,
-                { username: userName, email: userEmail },
-                { new: true, runValidators: true }
-            ); //
-            if (!updatedUser) {
-                return res.status(404).send("User not found");
-            }
+//route to upload image file
+router.post('/api/files/upload', upload.single('file'), fileController.uploadFile);
 
-            res.status(200).json(updatedUser);
-        }
-    } catch (error) {
-        if (error.code === 11000) {
-            return res.status(400).send("Duplicate field value entered");
-        }
-        console.error("Error updateUser :", error);
-        res.status(500).send(error + " Error in updateUser");
-    }
-});
+// Route to update user
+// router.post("/updateUser", async (req, res) => {
+//     try {
+//         const userdata = req.cookies.userData; // access the 'userData' cookie
+//         const { userName, userEmail } = req.body;
+//         if (!userdata) {
+//             console.log(
+//                 `user is not logedin redirected from userProfile route`
+//             );
+//             return res.redirect("/login");
+//         } else {
+//             const userData = JSON.parse(userdata); // converting cookie JSON string to normal string
+//             const username = userData.username;
+//             const user = await User.findOne({ username }); // Fetch user data from db
+//             if (!user) {
+//                 return res.status(404).send("User not found");
+//             }
+//             const updatedUser = await User.findByIdAndUpdate(
+//                 user._id,
+//                 { username: userName, email: userEmail },
+//                 { new: true, runValidators: true }
+//             ); //
+//             if (!updatedUser) {
+//                 return res.status(404).send("User not found");
+//             }
+
+//             res.status(200).json(updatedUser);
+//         }
+//     } catch (error) {
+//         if (error.code === 11000) {
+//             return res.status(400).send("Duplicate field value entered");
+//         }
+//         console.error("Error updateUser :", error);
+//         res.status(500).send(error + " Error in updateUser");
+//     }
+// });
 
 // route for user profile
 router.get("/userProfile",async (req, res) => {
@@ -192,8 +186,9 @@ router.get("/userProfile",async (req, res) => {
         } else {
             const user = JSON.parse(userData);
             const userName = user.username;
-            const userdb= await User.findOne({username:userName})
-            res.render("profileMenu", { userName, useremail:userdb.email}); 
+            const  userdb = await User.findOne(user);
+            const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
+            res.render("profileMenu", { userName, useremail:userdb.email, imageUrl}); 
         }
     } catch (error) {
         res.status(500).send(

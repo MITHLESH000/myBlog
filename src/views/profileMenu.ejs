@@ -11,18 +11,16 @@
         <div class="profile-container">
             <div class="profile">
 
-                <form id="profileForm" action="/updateUser" method="post">
+                <form id="profileForm" action="/api/files/upload" method="POST" enctype="multipart/form-data">
                     <label for="profileName">Name</label>
                     <input id="profileName" type="text" placeholder="<%= userName || 'Name'%>" name="userName" required>
                     <label for="profileEmail">Emale</label>
                     <input id="profileEmail" type="email" placeholder="<%= useremail || 'Email' %>" name="userEmail"
                         required>
                     <label for="profileImage">Image</label>
-
-                    
                     <div class="file-input-container">
                         <div class="file-input-button">Choose File</div>
-                        <input id="profileImage" type="file" class="file-input" placeholder="Image" name="image">
+                        <input type="file" name="file"  id="profileImage" class="file-input" >
                         
                       </div>
 

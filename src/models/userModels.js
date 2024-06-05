@@ -5,25 +5,26 @@ const { type } = require("os");
 // const { MongoClient } = require("mongodb");
 
 const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        unique: true,
-        default:'', // Default value if no email is provided
-    },
     username: {
         type: String,
         required: true,
         unique: true,
     },
+    email: {
+        type: String,
+        unique: true,
+        default: "", // Default value if no email is provided
+    },
     password: {
         type: String,
         required: true,
     },
-    image: {
-        type: String, // You can store the URL or path to the image
-        default: '',  // Default value if no image is provided
-    }
-    
+    url: {
+        type: String,
+    },
+    cloudinary_id: {
+        type: String,
+    },
 });
 
 userSchema.pre("save", async function (next) {
