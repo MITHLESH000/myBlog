@@ -34,7 +34,6 @@ app.use('/', indexRoutes);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'home.html'));
-  console.log(`server.js path:-${__dirname}`);
 });
 
 app.listen(port, () => {

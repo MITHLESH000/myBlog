@@ -27,7 +27,7 @@ router.use(express.static(path.join(__dirname, "../../public")));
 router.get("/editor", async (req, res) => {
     const userData = req.cookies.userData; // access the 'userData' cookie
     if (!userData) {
-        console.log(`user is not logedin redirected from userProfile route`);
+        
         return res.redirect("/login");
     } else {
         const user = JSON.parse(userData); // converting cookie JSON string to normal string
@@ -47,21 +47,19 @@ router.get("/search", async (req, res) => {
         }).limit(7).select("title _id") // Case insensitive search
         res.status(200).json(blogs);
     } catch (error) {
-        console.error("Error fetching blogs:", error);
-        res.status(500).send("Error fetching blogs");
+        
+        res.status(500).json(error+"Error fetching blogs");
     }
 });
 //Rout searchBlog to render blog page
 router.get("/searchBlog", async (req, res) => {
     try {
         const blogId = req.query.id;
-        console.log(`blogid:${blogId}`);
+        
         const userData = req.cookies.userData; // Access the 'userData' cookie
 
         if (!userData) {
-            console.log(
-                "User is not logged in, redirected from userProfile route"
-            );
+            
             return res.redirect("/login");
         } else {
             const user = JSON.parse(userData); // Convert cookie JSON string to an object
@@ -83,8 +81,8 @@ router.get("/searchBlog", async (req, res) => {
             res.render("blog", { blog, userName, imageUrl }); // Pass the blog to blogPage.ejs to render the data
         }
     } catch (error) {
-        console.error("Error in searchBlog route retrieving blog:", error);
-        res.status(500).send("Error retrieving blog");
+        
+        res.status(500).json("Error in searchBlog route retrieving blog:", error);
     }
 });
 
@@ -94,9 +92,7 @@ router.get("/blogPage", async (req, res) => {
     try {
         const userData = req.cookies.userData; // access the 'userData' cookie
         if (!userData) {
-            console.log(
-                `user is not logedin redirected from userProfile route`
-            );
+            
             return res.redirect("/login");
         } else {
             const user = JSON.parse(userData); // converting cookie JSON string to normal string
@@ -108,8 +104,8 @@ router.get("/blogPage", async (req, res) => {
             res.render("blogPage", { blogs, userName ,imageUrl}); // pass the blogs to blogPage.ejs to render the data
         }
     } catch (error) {
-        console.error("Error retrieving blogs:", error);
-        res.status(500).send(error + "Error retrieving blogs");
+        
+        res.status(500).json("Error retrieving blogs:",error);
     }
 });
 // Route to render registation/signup form
@@ -125,7 +121,6 @@ router.get("/login", (req, res) => {
 router.get("/logout", function (req, res) {
     res.clearCookie("userData");
     res.sendFile(path.join(__dirname, "../../public/home.html"));
-    console.log("Logged out");
 });
 
 // route for user profile update
@@ -179,9 +174,7 @@ router.get("/userProfile",async (req, res) => {
         // access userName from the cookie
         const userData = req.cookies.userData;
         if (!userData) {
-            console.log(
-                `user is not logedin redirected from userProfile route`
-            );
+           
             return res.redirect("/login");
         } else {
             const user = JSON.parse(userData);
@@ -201,20 +194,17 @@ router.get("/userProfile",async (req, res) => {
 // Route to handle signup form submission
 router.post("/signupForm", async (req, res) => {
     const {useremail, username, password } = req.body;
-    console.log(
-        `userName: ${username}, password: ${password}Email:${useremail} data from the browser`
-    );
     try {
         const existingUser = await User.findOne({ username: username });
         if (existingUser) {
-            console.log("User already exists. Prompting login.");
+            // console.log("User already exists. Prompting login.");
             return res.render("login", {
                 message: "You already have an account. Please log in.",
             });
         }
         const newUser = new User({email:useremail, username, password, });
         await newUser.save();
-        console.log("Registered successfuly and Login auto");
+        // console.log("Registered successfuly and Login auto");
         res.render("login", {
             message: " Registered successfuly and plese Login",
         });
@@ -222,8 +212,8 @@ router.post("/signupForm", async (req, res) => {
         if (error.code === 11000) {
             return res.status(400).send("Duplicate field value entered signupForm"+error);
         }
-        console.error('route signupForm route Error during registration:', error);
-        res.status(500).send('Internal Server Error in signupForn route');
+        // console.error('route signupForm route Error during registration:', error);
+        res.status(500).json('Internal Server Error in signupForn route',error);
     }
 });
 
@@ -246,15 +236,15 @@ router.post("/loginForm", async (req, res) => {
                     maxAge: 900000,
                     httpOnly: true,
                 });
-                console.log(`cookie created`);
+                // console.log(`cookie created`);
                 
                 res.redirect("/blogPage"); // redirect the route to /blogePage
             } else {
                 res.render("login", { message: "Incorrect password" });
-                console.log("Incorrect password");
+                // console.log("Incorrect password");
             }
         } else {
-            console.log("User not found. Please sign up");
+            // console.log("User not found. Please sign up");
             res.render("signup", {
                 message: "User not found. Please sign up."
             });
@@ -277,7 +267,7 @@ router.post("/editorForm", async (req, res) => {
             return res.status(401).send("User not authenticated please Login");
         } else {
             const user = JSON.parse(userData);
-            console.log(user.username);
+            // console.log(user.username);
             const author = user.username;
             const newBlog = new Blog({ title, content, author });
             await newBlog.save();

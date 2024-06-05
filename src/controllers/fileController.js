@@ -18,11 +18,10 @@ exports.uploadFile = async (req, res) => {
         }
 
         if (!req.file) {
-            console.log("No file received");
+            // console.log("No file received");
             return res.status(400).json({ error: "No file provided" });
         }
 
-        console.log(`Uploaded file path: ${req.file.path}`);
 
         const result = await cloudinary.uploader.upload(req.file.path);
 
