@@ -25,6 +25,11 @@ router.use(express.static(path.join(__dirname, "../../public")));
 // default user profile pic
 const defaultPic = '/img/icon/user.jpeg';
 
+
+router.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, '../../public', 'home.html'));
+  });
+
 // Route to render editor form
 router.get("/editor", async (req, res) => {
     const userData = req.cookies.userData; // access the 'userData' cookie
