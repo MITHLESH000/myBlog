@@ -10,7 +10,7 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const port = process.env.PORT ;
+const PORT = process.env.PORT || 5500;
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -36,6 +36,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, '../public', 'home.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

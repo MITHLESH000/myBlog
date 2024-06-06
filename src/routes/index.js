@@ -22,6 +22,8 @@ router.use(express.json());
 
 router.use(express.static(path.join(__dirname, "../../public")));
 
+// default user profile pic
+const defaultPic = '/img/icon/user.jpeg';
 
 // Route to render editor form
 router.get("/editor", async (req, res) => {
@@ -32,7 +34,7 @@ router.get("/editor", async (req, res) => {
     } else {
         const user = JSON.parse(userData); // converting cookie JSON string to normal string
         const  userdb = await User.findOne(user);
-        const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
+        const imageUrl= userdb.url || defaultPic;
         const userName = user.username;
         res.render("editor", { userName, imageUrl });
     }
@@ -65,7 +67,7 @@ router.get("/searchBlog", async (req, res) => {
             const user = JSON.parse(userData); // Convert cookie JSON string to an object
             const userName = user.username;
             const  userdb = await User.findOne(user);
-            const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
+            const imageUrl= userdb.url || defaultPic;
             
             // Validate if blogId is a valid MongoDB ObjectId
             if (!mongoose.Types.ObjectId.isValid(blogId)) {
@@ -98,14 +100,15 @@ router.get("/blogPage", async (req, res) => {
             const user = JSON.parse(userData); // converting cookie JSON string to normal string
             const userName = user.username;
             const  userdb = await User.findOne(user);
-            const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
+            const imageUrl= userdb.url || defaultPic;
+            console.log(`${userdb.url} and ${imageUrl}`)
             const blogs = await Blog.find(); // Fetch all blogs from db
             
             res.render("blogPage", { blogs, userName ,imageUrl}); // pass the blogs to blogPage.ejs to render the data
         }
     } catch (error) {
         
-        res.status(500).json("Error retrieving blogs:",error);
+        res.status(500).json({ message: "Error retrieving blogs", error });
     }
 });
 // Route to render registation/signup form
@@ -128,45 +131,8 @@ router.get("/profileForm", async (req, res) => {
     res.redirect("/updateUser");
 });
 
-//route to upload image file
+//route to upload image file and user update data
 router.post('/api/files/upload', upload.single('file'), fileController.uploadFile);
-
-// Route to update user
-// router.post("/updateUser", async (req, res) => {
-//     try {
-//         const userdata = req.cookies.userData; // access the 'userData' cookie
-//         const { userName, userEmail } = req.body;
-//         if (!userdata) {
-//             console.log(
-//                 `user is not logedin redirected from userProfile route`
-//             );
-//             return res.redirect("/login");
-//         } else {
-//             const userData = JSON.parse(userdata); // converting cookie JSON string to normal string
-//             const username = userData.username;
-//             const user = await User.findOne({ username }); // Fetch user data from db
-//             if (!user) {
-//                 return res.status(404).send("User not found");
-//             }
-//             const updatedUser = await User.findByIdAndUpdate(
-//                 user._id,
-//                 { username: userName, email: userEmail },
-//                 { new: true, runValidators: true }
-//             ); //
-//             if (!updatedUser) {
-//                 return res.status(404).send("User not found");
-//             }
-
-//             res.status(200).json(updatedUser);
-//         }
-//     } catch (error) {
-//         if (error.code === 11000) {
-//             return res.status(400).send("Duplicate field value entered");
-//         }
-//         console.error("Error updateUser :", error);
-//         res.status(500).send(error + " Error in updateUser");
-//     }
-// });
 
 // route for user profile
 router.get("/userProfile",async (req, res) => {
@@ -180,7 +146,7 @@ router.get("/userProfile",async (req, res) => {
             const user = JSON.parse(userData);
             const userName = user.username;
             const  userdb = await User.findOne(user);
-            const imageUrl= userdb.url || '/img/icon/profilePic.jpeg';
+            const imageUrl= userdb.url || defaultPic;
             res.render("profileMenu", { userName, useremail:userdb.email, imageUrl}); 
         }
     } catch (error) {
